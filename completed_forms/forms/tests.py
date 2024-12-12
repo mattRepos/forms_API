@@ -63,3 +63,36 @@ class ApiTestCase(TestCase):
             }
         }
         )
+
+
+
+    def test_post_form_with_1_field(self):
+
+        url = reverse('api_v1')
+        test_body = {
+            "form": {
+                "asdasd": "2014-12-18"
+            }
+        }
+    
+        response = self.client.post(url, test_body, content_type='application/json')
+
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(response.json(), {"form":{"fields":{"asdasd": "date"}}})
+
+
+    def test_post_form_with_text(self):
+
+        url = reverse('api_v1')
+        test_body = {
+            "form": {
+                "asdasd": "asdasd"
+            }
+        }
+    
+        response = self.client.post(url, test_body, content_type='application/json')
+
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(response.json(), {"form":{"fields":{"asdasd": "text"}}})
